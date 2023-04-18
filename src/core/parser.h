@@ -6,7 +6,6 @@
  * @file parser.cpp
  */
 
-#include <tinyxml2.h>
 #include <iostream>
 using std::endl;
 using std::clog;
@@ -37,6 +36,8 @@ using std::pair;
 #include <optional>
 using std::optional;
 
+
+#include "../ext/tinyxml2.h"
 #include "paramset.h"
 #include "error.h"
 

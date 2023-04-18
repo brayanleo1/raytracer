@@ -15,17 +15,22 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 # TinyXML2 is not a module package, therefore cannot be found with find_package() command.
 # Set those manually, for now.
-set( TinyXML2_INCLUDE_DIRS "/usr/local/include" )
-set( TinyXML2_LIB_DIRS "/usr/local/lib" )
-set( TinyXML2_LIBRARIES "tinyxml2" )
+#set( TinyXML2_INCLUDE_DIRS ${RT3_SOURCE_DIR}"/tinyxml2/" #"/usr/local/include" 
+#)
+#set( TinyXML2_LIB_DIRS ${RT3_SOURCE_DIR}"/tinyxml2/" #"/usr/local/lib" 
+#)
+#set( TinyXML2_LIBRARIES "tinyxml2" 
+#)
 
 # Set "manually" paths that need to be considered while compiling/linking
 include_directories( cameras
                      integrators
                      core
                      ext
-                     ${TinyXML2_INCLUDE_DIRS} )
-link_directories( ${TinyXML2_LIB_DIRS} )
+                     )
+#link_directories( ${TinyXML2_LIB_DIRS} )
+
+
 
 #=== SETTING VARIABLES ===#
 # Compiling flags
@@ -40,10 +45,11 @@ add_executable(basic_rt3 ${RT3_SOURCE_DIR}/core/api.cpp
                          ${RT3_SOURCE_DIR}/core/image_io.cpp
                          ${RT3_SOURCE_DIR}/core/parser.cpp
                          ${RT3_SOURCE_DIR}/ext/lodepng.cpp
+                         ${RT3_SOURCE_DIR}/ext/tinyxml2.cpp
                          ${RT3_SOURCE_DIR}/main/rt3.cpp
                         )
 
-target_link_libraries(basic_rt3 PRIVATE ${TinyXML2_LIBRARIES})
+#target_link_libraries(basic_rt3 PRIVATE ${TinyXML2_LIBRARIES})
 
 #define C++17 as the standard.
 set_property(TARGET basic_rt3 PROPERTY CXX_STANDARD 17)
