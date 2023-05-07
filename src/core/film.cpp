@@ -4,6 +4,7 @@
 #include "api.h"
 #include "image_io.h"
 #include "paramset.h"
+#include "commons.h"
 
 namespace rt3 {
 
@@ -19,7 +20,7 @@ Film::~Film()
 }
 
 /// Add the color to image.
-void Film::add_sample(const Point2f &pixel_coord, const ColorXYZ &pixel_color)
+void Film::add_sample(const Point2i &pixel_coord, const RGBColor &pixel_color)
 {
   // TODO: add color to the proper location.
 }

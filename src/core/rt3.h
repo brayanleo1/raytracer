@@ -115,13 +115,13 @@ template <typename T, typename U, typename V> inline T Clamp(T val, U low, V hig
 /// Degrees to radians.
 inline float Radians(float deg)
 {
-  return ((float)M_PI / 180.f) * deg;
+  return ((float)/*M_PI*/3.14159265358979323846 / 180.f) * deg;
 }
 
 /// Radians to degreees.
 inline float Degrees(float rad)
 {
-  return (180.f / (float)M_PI) * rad;
+  return (180.f / (float)/*M_PI*/3.14159265358979323846) * rad;
 }
 }  // namespace rt3
 

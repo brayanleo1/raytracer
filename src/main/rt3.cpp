@@ -41,8 +41,8 @@ RunningOptions cli_parser(int argc, char *argv[]) {
   std::ostringstream oss;
   for (int i{1}; i < argc; ++i) {
     std::string option = cstr_lowercase(argv[i]);
-    if (option == "--cropwindow" or option == "-cropwindow" or
-        option == "--crop" or option == "-crop") {
+    if (option == "--cropwindow" || option == "-cropwindow" ||
+        option == "--crop" || option == "-crop") {
       if (i + 4 >= argc) { // The option's argument is missing.
         usage("missing value after --cropwindow argument");
       }
@@ -51,17 +51,17 @@ RunningOptions cli_parser(int argc, char *argv[]) {
       opt.crop_window[0][1] = std::stof(argv[++i]);
       opt.crop_window[1][0] = std::stof(argv[++i]);
       opt.crop_window[1][1] = std::stof(argv[++i]);
-    } else if (option == "--outfile" or option == "-outfile" or
+    } else if (option == "--outfile" || option == "-outfile" ||
                option == "-o") {
       if (i + 1 == argc) { // The option's argument is missing.
         usage("missing value after --outfile argument");
       }
       // Get output image file name.
       opt.outfile = std::string{argv[++i]};
-    } else if (option == "--quickrender" or option == "-quickrender" or
-               option == "-q" or option == "--quick" or option == "-quick") {
+    } else if (option == "--quickrender" || option == "-quickrender" ||
+               option == "-q" || option == "--quick" || option == "-quick") {
       opt.quick_render = true;
-    } else if (option == "--help" or option == "-help" or option == "-h") {
+    } else if (option == "--help" || option == "-help" || option == "-h") {
       usage();
     } else {
       opt.filename = std::string(argv[i]);

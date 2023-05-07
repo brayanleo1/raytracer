@@ -4,6 +4,7 @@
 #include "error.h"
 #include "paramset.h"
 #include "rt3.h"
+#include "commons.h"
 
 namespace rt3 {
 
@@ -23,7 +24,7 @@ class Film {
     return m_full_resolution;
   };
   /// Takes a sample `p` and its radiance `L` and updates the image.
-  void add_sample(const Point2f &, const ColorXYZ &);
+  void add_sample(const Point2i &, const RGBColor &);
   void write_image() const;
 
   //=== Film Public Data

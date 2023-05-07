@@ -270,7 +270,7 @@ bool parse_single_COMPOSITE_attrib(tinyxml2::XMLElement *p_element,
     // float) This read all the BASIC values into a single array.
     auto result = read_array<BASIC>(p_element, att_key);
     // Error check
-    if (not result.has_value()) {
+    if (!result.has_value()) {
       RT3_ERROR(string{"parse_single_COMPOSITE_attrib(): could not read values "
                        "for attribute \"" +
                        att_key + "\"!"});
@@ -344,7 +344,7 @@ bool parse_array_COMPOSITE_attrib(tinyxml2::XMLElement *p_element,
     // is to break it into COMPOSITE units. (e.g. COMPOSITE = Point3f)
     auto result = read_array<BASIC>(p_element, att_key);
     // Error check
-    if (not result.has_value()) {
+    if (!result.has_value()) {
       RT3_ERROR(string{"parse_array_COMPOSITE_attrib(): could not read values "
                        "for attribute \"" +
                        att_key + "\"!"});
@@ -410,7 +410,7 @@ bool parse_array_BASIC_attrib(tinyxml2::XMLElement *p_element,
     // This read all the T values into a single array.
     auto result = read_array<T>(p_element, att_key);
     // Error check
-    if (not result.has_value()) {
+    if (!result.has_value()) {
       RT3_ERROR(string{
           "parse_array_BASIC_attrib(): could not read values for attribute \"" +
           att_key + "\"!"});

@@ -15,7 +15,7 @@ namespace rt3 {
 bool save_ppm6(unsigned char *data, size_t w, size_t h, size_t d,
                const std::string &file_name_) {
   std::ofstream ofs_file(file_name_, std::ios::out | std::ios::binary);
-  if (not ofs_file.is_open()) return false;
+  if (!ofs_file.is_open()) return false;
 
   ofs_file << "P6\n"
            << w << " " << h << "\n"
@@ -24,7 +24,7 @@ bool save_ppm6(unsigned char *data, size_t w, size_t h, size_t d,
   ofs_file.write((char *)data, d * w * h);
 
   // Did it not fail?
-  auto result = not ofs_file.fail();
+  auto result = !ofs_file.fail();
 
   ofs_file.close();
 
@@ -35,7 +35,7 @@ bool save_ppm6(unsigned char *data, size_t w, size_t h, size_t d,
 bool save_ppm3(unsigned char *data, size_t w, size_t h, size_t d,
                const std::string &file_name_) {
   std::ofstream ofs_file(file_name_, std::ios::out);
-  if (not ofs_file.is_open()) return false;
+  if (!ofs_file.is_open()) return false;
 
   ofs_file << "P3\n"
            << w << " " << h << "\n"
@@ -49,7 +49,7 @@ bool save_ppm3(unsigned char *data, size_t w, size_t h, size_t d,
   }
 
   // Did it not fail?
-  auto result = not ofs_file.fail();
+  auto result = !ofs_file.fail();
 
   ofs_file.close();
 

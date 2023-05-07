@@ -3,6 +3,7 @@
 
 #include "rt3-base.h"
 #include "rt3.h"
+#include "commons.h"
 
 namespace rt3 {
 // TODO: Create a virtual class Background and derive BackgroundColor,
@@ -41,6 +42,9 @@ class BackgroundColor : public Background {
   /// Each corner has a color associated with.
   // Spectrum corners[4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
   /// Corner indices.
+
+  RGBColor corners[4]={{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+
   enum Corners_e {
     bl = 0,  //!< Bottom left corner.
     tl,      //!< Top left corner.
@@ -53,6 +57,12 @@ class BackgroundColor : public Background {
   BackgroundColor() {
     // TODO
   }
+
+  RGBColor sample ( const RGBColor &A, const RGBColor &B, float t ) const;
+
+  RGBColor sample ( const float &A, const float &B) const;
+
+  BackgroundColor( const std::vector< RGBColor >& colors );
 
   virtual ~BackgroundColor(){};
 };
