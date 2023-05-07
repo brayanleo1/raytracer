@@ -50,10 +50,10 @@ RGBColor BackgroundColor::sample(const RGBColor &A, const RGBColor &B, float t) 
 
 RGBColor BackgroundColor::sample(const float &A, const float &B) const
 {
-  _sleep(100);
+  /*_sleep(100);
   for(auto s : corners) {
     cout<<"r:"<<std::to_string(s.r)<<" g:"<<std::to_string(s.g)<<" b:"<<std::to_string(s.b)<<"para um\n";
-  }
+  }*/
   auto iL = sample(corners[tl], corners[bl], B);
   auto iR = sample(corners[tr], corners[br], B);
   RGBColor R = sample(iL, iR, A);  

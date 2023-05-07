@@ -6,11 +6,12 @@
 
 namespace rt3 {
 
-void render(Background backgroundb, Film film) {
+void render(BackgroundColor backgroundb, Film film) {
   // Perform objects initialization here.
   // The Film object holds the memory for the image.
   // ...
-  BackgroundColor *background = (BackgroundColor *) &backgroundb;
+  //BackgroundColor *background = (BackgroundColor *) &backgroundb;
+  auto background = backgroundb;
   auto w = film.get_resolution()[0];
   auto h = film.get_resolution()[1];
   //auto w = camera.film.width(); // Retrieve the image dimensions in pixels.
@@ -19,7 +20,8 @@ void render(Background backgroundb, Film film) {
   for ( int j = 0 ; j < h ; j++ ) {
       for( int i = 0 ; i < w ; i++ ) {
           // Not shooting rays just yet; so let us sample the background.
-          auto color = background->sample( float(i)/float(w), float(j)/float(h) ); // get background color.
+          auto color = background.sample( float(i)/float(w), float(j)/float(h) );
+          //auto color = background->sample( float(i)/float(w), float(j)/float(h) ); // get background color.
           /*camera.*/film.add_sample( Point2i{i,j}, color ); // set image buffer at position (i,j), accordingly.
       }
   }
@@ -45,9 +47,9 @@ Film *API::make_film(const std::string &name , const ParamSet &ps) {
   return film;
 }
 
-Background *API::make_background(const std::string &name, const ParamSet &ps) {
+BackgroundColor *API::make_background(const std::string &name, const ParamSet &ps) {
   std::cout << ">>> Inside API::background()\n";
-  Background *bkg{nullptr};
+  BackgroundColor *bkg{nullptr};
   bkg = create_color_background(ps);
 
   // Return the newly created background.
@@ -106,7 +108,7 @@ void API::world_end() {
 
   // At this point, we have the background as a solitary pointer here.
   // In the future, the background will be parte of the scene object.
-  std::unique_ptr<Background> the_background{
+  std::unique_ptr<BackgroundColor> the_background{
       make_background(render_opt->bkg_type, render_opt->bkg_ps)};
   // Same with the film, that later on will belong to a camera object.
   std::unique_ptr<Film> the_film{
