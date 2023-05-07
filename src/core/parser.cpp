@@ -8,6 +8,7 @@
 #include "api.h"
 #include "paramset.h"
 #include "rt3.h"
+#include "commons.h"
 
 // === Function Implementation
 
