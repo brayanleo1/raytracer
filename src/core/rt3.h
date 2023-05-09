@@ -21,6 +21,9 @@ using std::tuple;
 #include <array>
 using std::array;
 
+#include "./glm/vec3.hpp"
+#include "./glm/vec2.hpp"
+
 //== Alias to the chosen data structure to implement a dictionary.
 //#define Dictionary std::unordered_map
 #define Dictionary std::map
@@ -31,21 +34,31 @@ namespace rt3 {
 /// Point3f!!!!
 // Alias to a Point3f (simulation)
 using Point3f = std::array<float, 3>;
+//glm::vec3 Point3f;
 // Temporary Vec3, just to compile. TODO: Implement a real one!!!
-using Vector3f = std::array<float, 3>;
-using ColorXYZ = std::array<float, 3>;
-using Spectrum = std::array<float, 3>;
-using Normal3f = std::array<float, 3>;
-using Ray = std::array<float, 3>;
+ using Vector3f = std::array<float, 3>;
+//glm::vec3 Vector3f;
+ using ColorXYZ = std::array<float, 3>;
+//glm::vec3 ColorXYZ;
+ using Spectrum = std::array<float, 3>;
+//glm::vec3 Spectrum;
+ using Normal3f = std::array<float, 3>;
+//glm::vec3 Normal3f;
+ using Ray = std::array<float, 3>;
+//glm::vec3 Ray;
 
 // List of points
 using ListPoint3f = std::vector<Point3f>;
 
 // Temporary Vec3i. TODO: code a real one.
-using Vector3i = std::array<int, 3>;
-using Point3i = std::array<int, 3>;
-using Point2i = std::array<int, 2>;
-using Point2f = std::array<float, 2>;
+ using Vector3i = std::array<int, 3>;
+//glm::vec3 Vector3i;
+ using Point3i = std::array<int, 3>;
+//glm::vec3 Point3i;
+ using Point2i = std::array<int, 2>;
+//glm::vec2 Point2i;
+ using Point2f = std::array<float, 2>;
+//glm::vec2 Point2f;
 
 template <typename T, size_t S>
 std::ostream& operator<<(std::ostream& os, const std::array<T, S>& v)
