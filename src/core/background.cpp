@@ -31,24 +31,21 @@ BackgroundColor *create_color_background(const ParamSet &ps) {
   for(auto s : colors) {
     if((s[0] > 0 && s[0] < 1) || (s[1] > 0 && s[1] < 1) || (s[2] > 0 && s[2] < 1)){
       flnum = true;
+      break;
     }
   }
-  if(flnum) {
-    for(auto s : colors) {
+  for(auto s : colors) {
       RGBColor c;
-      c.r = int(s[0]*255);
-      c.g = int(s[1]*255);
-      c.b = int(s[2]*255);
-      rgbColors.push_back(c);
-    }
-  } else {
-      for(auto s : colors) {
-      RGBColor c;
-      c.r = s[0];
-      c.g = s[1];
-      c.b = s[2];
-      rgbColors.push_back(c);
-    }
+      if(flnum) {
+        c.r = int(s[0]*255);
+        c.g = int(s[1]*255);
+        c.b = int(s[2]*255);
+      } else {
+        c.r = s[0];
+        c.g = s[1];
+        c.b = s[2];
+      }
+    rgbColors.push_back(c);
   }
   
   return new BackgroundColor(rgbColors);

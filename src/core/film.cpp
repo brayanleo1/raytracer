@@ -13,8 +13,8 @@
 namespace rt3 {
 
 //=== Film Method Definitions
-Film::Film(const Point2i &resolution, const std::string &filename, image_type_e imgt)
-    : m_full_resolution{ resolution }, m_filename{ filename }, m_image_type{ imgt }
+Film::Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<RGBColor> &imgdt)
+    : m_full_resolution{ resolution }, m_filename{ filename }, m_image_type{ imgt }, m_image_data{ imgdt }
 {
   // TODO
 }
@@ -26,19 +26,9 @@ Film::~Film()
 /// Add the color to image.
 void Film::add_sample(const Point2i &pixel_coord, const RGBColor &pixel_color)
 {
-  /*
-  std::cout << "P3\n";
-	std::cout << W << ' ' << H << '\n';
-	std::cout << "255\n";
-  */
- if(pixel_coord[0] == 0 && pixel_coord[1] == 0) {
-  m_image_data.push_back("P3\n");
-  std::string t = std::to_string(m_full_resolution[0]) + ' ' + std::to_string(m_full_resolution[1])+"\n";
-  m_image_data.push_back(t);
-  m_image_data.push_back("255\n");
- }
 
-  m_image_data[(m_image_data.size()-1)].append(" "+std::to_string(pixel_color.r)+' '+std::to_string(pixel_color.g)+' '+std::to_string(pixel_color.b)+"\n");
+  m_image_data[(pixel_coord[1]*m_full_resolution[0])+pixel_coord[0]] = pixel_color;
+  //m_image_data[(m_image_data.size()-1)].append(" "+std::to_string(pixel_color.r)+' '+std::to_string(pixel_color.g)+' '+std::to_string(pixel_color.b)+"\n");
  
 }
 
@@ -46,11 +36,20 @@ void Film::add_sample(const Point2i &pixel_coord, const RGBColor &pixel_color)
 void Film::write_image(void) const
 {
   // TODO: call the proper writing function, either PPM or PNG.
-  std::ofstream out("output.ppm");
-  for(auto l : m_image_data) {
-    out << l;
+  if(m_image_type == image_type_e::PNG) {
+
+  } else if(m_image_type == image_type_e::PPM3) {
+    std::ofstream out(m_filename+".ppm");
+    out << "P3\n";
+    std::string t = std::to_string(m_full_resolution[0]) + ' ' + std::to_string(m_full_resolution[1])+"\n";
+    out << t;
+    out << "255\n";
+    for(auto l : m_image_data) {
+      out << std::to_string(l.r)<< " " << std::to_string(l.g) << " " << std::to_string(l.b) << "\n";
+    }
+    out.close();
   }
-  out.close();
+  
 }
 
 // Factory function pattern.
@@ -98,14 +97,15 @@ Film *create_film(const ParamSet &ps)
     std::cout << e << " ";
   std::cout << '\n';
 
-  /*
-  std::cout << "P3\n";
-	std::cout << W << ' ' << H << '\n';
-	std::cout << "255\n";
-  (para o inicio do arquivo)
-  */
+  std::vector<RGBColor> data;
+
+  for(int i = 0; i < xres; i++) {
+    for(int j = 0; j < yres; j++) {
+      data.push_back({0, 0, 0});
+    }
+  }
 
   // Note that the image type is fixed here. Must be read from ParamSet, though.
-  return new Film(Point2i{ xres, yres }, filename, Film::image_type_e::PNG);
+  return new Film(Point2i{ xres, yres }, filename, Film::image_type_e::PPM3, data);
 }
 }  // namespace rt3
