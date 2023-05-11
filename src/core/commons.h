@@ -3,18 +3,19 @@
 
 #include <cstdint>
 
-struct RGBColor
+struct RGBAColor
 {
-	std::uint8_t r;
-	std::uint8_t g;
-	std::uint8_t b;
+	std::uint32_t r;
+	std::uint32_t g;
+	std::uint32_t b;
+	std::uint32_t a;
 };
 
-constexpr RGBColor red{255,0,0};
-constexpr RGBColor green{0,255,0};
-constexpr RGBColor blue{0,0,255};
-constexpr RGBColor yeallow{255,255,0};
-constexpr RGBColor white{255,255,255};
-constexpr RGBColor black{0,0,0};
+constexpr RGBAColor red{255,0,0,255};
+constexpr RGBAColor green{0,255,0,255};
+constexpr RGBAColor blue{0,0,255,255};
+constexpr RGBAColor yeallow{255,255,0,255};
+constexpr RGBAColor white{255,255,255,255};
+constexpr RGBAColor black{0,0,0,255};
 
 #endif

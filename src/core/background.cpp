@@ -26,7 +26,7 @@ BackgroundColor *create_color_background(const ParamSet &ps) {
   } else {
     colors.push_back(rt3::retrieve(ps, "color", noValue));
   }
-  std::vector<RGBColor> rgbColors;
+  std::vector<RGBAColor> rgbColors;
   bool flnum = false;
   for(auto s : colors) {
     if((s[0] > 0 && s[0] < 1) || (s[1] > 0 && s[1] < 1) || (s[2] > 0 && s[2] < 1)){
@@ -35,15 +35,17 @@ BackgroundColor *create_color_background(const ParamSet &ps) {
     }
   }
   for(auto s : colors) {
-      RGBColor c;
+      RGBAColor c;
       if(flnum) {
         c.r = int(s[0]*255);
         c.g = int(s[1]*255);
         c.b = int(s[2]*255);
+        c.a = 255;
       } else {
         c.r = s[0];
         c.g = s[1];
         c.b = s[2];
+        c.a = 255;
       }
     rgbColors.push_back(c);
   }
@@ -51,17 +53,18 @@ BackgroundColor *create_color_background(const ParamSet &ps) {
   return new BackgroundColor(rgbColors);
 }
 
-RGBColor BackgroundColor::sample(const RGBColor &A, const RGBColor &B, float t) const
+RGBAColor BackgroundColor::sample(const RGBAColor &A, const RGBAColor &B, float t) const
 {
-  RGBColor R;
+  RGBAColor R;
   //cout<<std::to_string(A.r)<<" xr " << std::to_string(B.r)<<"\n";
   R.r = rt3::Lerp(t, float(A.r), float(B.r));
   R.g = rt3::Lerp(t, float(A.g), float(B.g));
 	R.b = rt3::Lerp(t, float(A.b), float(B.b));
+  R.a = 255;
 	return R;
 }
 
-RGBColor BackgroundColor::sample(const float &A, const float &B) const
+RGBAColor BackgroundColor::sample(const float &A, const float &B) const
 {
   /*_sleep(100);
   for(auto s : corners) {
@@ -69,13 +72,13 @@ RGBColor BackgroundColor::sample(const float &A, const float &B) const
   }*/
   auto iL = sample(corners[tl], corners[bl], B);
   auto iR = sample(corners[tr], corners[br], B);
-  RGBColor R = sample(iL, iR, A);  
+  RGBAColor R = sample(iL, iR, A);  
   //cout<<std::to_string(B)<<" "<<std::to_string(A)<<"\n";
   //cout<<"r:"<<std::to_string(R.r)<<" g:"<<std::to_string(R.g)<<" b:"<<std::to_string(R.b)<<"para um\n";
 	return R;
 }
 
-BackgroundColor::BackgroundColor(const std::vector<RGBColor> &colors)
+BackgroundColor::BackgroundColor(const std::vector<RGBAColor> &colors)
 {
   corners[bl] = colors[bl];
   if(colors.size() > 1) {

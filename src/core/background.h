@@ -43,7 +43,7 @@ class BackgroundColor : public Background {
   // Spectrum corners[4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
   /// Corner indices.
 
-  RGBColor corners[4]={{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+  RGBAColor corners[4]={{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
 
   enum Corners_e {
     bl = 0,  //!< Bottom left corner.
@@ -58,11 +58,11 @@ class BackgroundColor : public Background {
     // TODO
   }
 
-  RGBColor sample ( const RGBColor &A, const RGBColor &B, float t ) const;
+  RGBAColor sample ( const RGBAColor &A, const RGBAColor &B, float t ) const;
 
-  RGBColor sample ( const float &A, const float &B) const;
+  RGBAColor sample ( const float &A, const float &B) const;
 
-  BackgroundColor( const std::vector< RGBColor >& colors );
+  BackgroundColor( const std::vector< RGBAColor >& colors );
 
   virtual ~BackgroundColor(){};
 };

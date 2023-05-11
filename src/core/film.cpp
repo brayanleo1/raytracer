@@ -9,11 +9,12 @@
 #include "image_io.h"
 #include "paramset.h"
 #include "commons.h"
+#include "lodepng.h"
 
 namespace rt3 {
 
 //=== Film Method Definitions
-Film::Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<RGBColor> &imgdt)
+Film::Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<RGBAColor> &imgdt)
     : m_full_resolution{ resolution }, m_filename{ filename }, m_image_type{ imgt }, m_image_data{ imgdt }
 {
   // TODO
@@ -24,7 +25,7 @@ Film::~Film()
 }
 
 /// Add the color to image.
-void Film::add_sample(const Point2i &pixel_coord, const RGBColor &pixel_color)
+void Film::add_sample(const Point2i &pixel_coord, const RGBAColor &pixel_color)
 {
 
   m_image_data[(pixel_coord[1]*m_full_resolution[0])+pixel_coord[0]] = pixel_color;
@@ -37,7 +38,16 @@ void Film::write_image(void) const
 {
   // TODO: call the proper writing function, either PPM or PNG.
   if(m_image_type == image_type_e::PNG) {
-
+    //Image_data gets a fourth 255 at each for opacity
+    /*std::string data;
+    std::vector<unsigned char> img;
+    for(auto l : m_image_data) {
+      data.append(std::to_string(l.r)+" "+std::to_string(l.g)+" "+std::to_string(l.b)+" 255\n");
+    }
+    strcpy( (char*) img, data );*/
+    //Aqui embaixo está o começo do encode
+    //lodepng::encode(m_filename, m_image_data, m_full_resolution[0], m_full_resolution[1]);
+    //lodepng::encode(img,img/*in*/,m_full_resolution[0],m_full_resolution[1]);
   } else if(m_image_type == image_type_e::PPM3) {
     std::ofstream out(m_filename+".ppm");
     out << "P3\n";
@@ -97,11 +107,11 @@ Film *create_film(const ParamSet &ps)
     std::cout << e << " ";
   std::cout << '\n';
 
-  std::vector<RGBColor> data;
+  std::vector<RGBAColor> data;
 
   for(int i = 0; i < xres; i++) {
     for(int j = 0; j < yres; j++) {
-      data.push_back({0, 0, 0});
+      data.push_back({0, 0, 0, 255});
     }
   }
 
