@@ -82,4 +82,69 @@ namespace rt3 {
        return Ray(w, e+un*u+vn*v);
     }
 
+    Camera *create_camera(const ParamSet &ps){
+        std::cout << ">>> Inside create_camera()\n";
+        Point3f lk_at = retrieve(ps, "look_at", Point3f(0, 0, 0));
+        Point3f lk_fr = retrieve(ps, "look_from", Point3f(0, 0, 0));
+        Point3f up = retrieve(ps, "look_up", Point3f(0, 0, 0));
+        int fov = retrieve(ps, "fovy", int(0));
+
+        return new Camera(lk_at, lk_fr, up, fov);
+        /*
+        std::cout << ">>> Inside create_film()\n";
+        std::string filename;
+        // Let us check whether user has provided an output file name via
+        // command line arguments in main().
+        if (API::curr_run_opt.outfile != "")
+        {
+        // Retrieve filename defined via CLI.
+        filename = API::curr_run_opt.outfile;
+        // Retrieve another filename, now from the ParamSet object.
+        std::string filename_from_file = retrieve(ps, "filename", std::string{""});
+        if (filename_from_file != "") // We also get a filename from scene file...
+            RT3_WARNING(string{"Output filename supplied on command line, \""} + API::curr_run_opt.outfile + string{"\" is overriding filename provided in scene "
+                                                                                                                    "description file, \""} +
+                        filename_from_file);
+        }
+        else
+        {
+        // Try yo retrieve filename from scene file.
+        filename = retrieve(ps, "filename", std::string{"image.png"});
+        }
+
+        // Read resolution.
+        // Aux function that retrieves info from the ParamSet.
+        int xres = retrieve(ps, "x_res", int(1280));
+        // Aux function that retrieves info from the ParamSet.
+        int yres = retrieve(ps, "y_res", int(720));
+        // Quick render?
+        if (API::curr_run_opt.quick_render == true)
+        {
+        // decrease resolution.
+        xres = std::max(1, xres / 4);
+        yres = std::max(1, yres / 4);
+        }
+
+        // Read crop window information.
+        std::vector<real_type> cw = retrieve(ps, "crop_window", std::vector<real_type>{0, 1, 0, 1});
+        std::cout << "Crop window ";
+        for (const auto &e : cw)
+        std::cout << e << " ";
+        std::cout << '\n';
+
+        std::vector<RGBAColor> data;
+
+        for (int i = 0; i < xres; i++)
+        {
+        for (int j = 0; j < yres; j++)
+        {
+            data.push_back({0, 0, 0, 255});
+        }
+        }
+
+        // Note that the image type is fixed here. Must be read from ParamSet, though.
+        return new Film(Point2i{float(xres), float(yres)}, filename, Film::image_type_e::PPM3, data);
+        */
+    }
+
 }

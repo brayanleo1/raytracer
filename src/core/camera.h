@@ -30,6 +30,8 @@ class OrthographicCamera : public Camera {
     Ray generate_ray(int x, int y);
 	// ...
 };
+
+Camera *create_camera(const ParamSet &ps); 
 }
 
 #endif  // CAMERA_H
