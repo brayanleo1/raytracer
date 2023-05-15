@@ -39,7 +39,7 @@ namespace rt3
   using ColorXYZ = ms::vec3;
   using Spectrum = ms::vec3;
   using Normal3f = ms::vec3;
-  using Ray = ms::vec3;
+  //using Ray = ms::vec3;
 
   // List of points
   using ListPoint3f = std::vector<Point3f>;

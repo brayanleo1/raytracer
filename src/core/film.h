@@ -27,6 +27,23 @@ class Film {
   void add_sample(const Point2i &, const RGBAColor &);
   void write_image() const;
 
+  // Copy constructor.
+  Film(const Film& other) :
+    m_full_resolution(other.m_full_resolution),
+    m_filename(other.m_filename),
+    m_image_type(other.m_image_type),
+    m_image_data(other.m_image_data)
+  {}
+
+  // Assignment operator.
+  Film& operator=(const Film& other) {
+    m_full_resolution = other.m_full_resolution;
+    m_filename = other.m_filename;
+    m_image_type = other.m_image_type;
+    m_image_data = other.m_image_data;
+    return *this;
+  }
+
   //=== Film Public Data
   const Point2i m_full_resolution;  //!< The image's full resolution values.
   std::string m_filename;           //!< Full path file name + extension.

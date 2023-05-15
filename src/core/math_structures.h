@@ -186,55 +186,78 @@ namespace ms
     }
 
     /// Implements the structure of a 2 position vector.
-    class vec2
+    class vec2 {
+public:
+    vec2() {}
+    vec2(float e0, float e1) : e{ e0, e1 } {}
+    vec2(std::initializer_list<float> values)
     {
-    public:
-        vec2() {}
-        vec2(float e0, float e1)
-        {
-            e[0] = e0;
-            e[1] = e1;
-            m_end = 2;
+        // Verifica se a lista de inicialização tem 2 elementos
+        if (values.size() != 2) {
+            // Lança uma exceção ou imprime uma mensagem de erro, conforme necessário
+            throw std::runtime_error("Error: initialization list must have two elements");
         }
-        vec2(std::initializer_list<float> values)
-        {
-            // Verifica se a lista de inicialização tem 3 elementos
-            if (values.size() != 2)
-            {
-                // Lança uma exceção ou imprime uma mensagem de erro, conforme necessário
-                throw std::runtime_error("Error: initialization list must have two elements");
-            }
 
-            // Inicializa os valores de x, y e z a partir da lista de inicialização
-            auto it = values.begin();
-            e[0] = *it++;
-            e[1] = *it++;
-            m_end = 2;
+        // Inicializa os valores de x e y a partir da lista de inicialização
+        auto it = values.begin();
+        e[0] = *it++;
+        e[1] = *it++;
+    }
+
+    /*vec2(const vec2& other) {
+        e[0] = other.e[0];
+        e[1] = other.e[1];
+        m_end = other.m_end;
+    }*/
+
+    // Copy constructor
+    vec2(const vec2& other) {
+        e[0] = other.e[0];
+        e[1] = other.e[1];
+        m_end = other.m_end;
+    }
+
+    // Copy assignment operator
+    vec2& operator=(const vec2& other) {
+        e[0] = other.e[0];
+        e[1] = other.e[1];
+        m_end = other.m_end;
+        return *this;
+    }
+
+    /*vec2& operator=(const vec2& other) {
+        if (this != &other) {
+            e[0] = other.e[0];
+            e[1] = other.e[1];
+            m_end = other.m_end;
         }
-        inline float x() const { return e[0]; }
-        inline float y() const { return e[1]; }
-        inline float r() const { return e[0]; }
-        inline float g() const { return e[1]; }
+        return *this;
+    }*/
 
-        int m_end = 0;
+    inline float x() const { return e[0]; }
+    inline float y() const { return e[1]; }
+    inline float r() const { return e[0]; }
+    inline float g() const { return e[1]; }
 
-        inline const vec2 &operator+() const { return *this; }
-        inline vec2 operator-() const { return vec2(-e[0], -e[1]); }
-        inline float operator[](int i) const { return e[i]; }
-        inline float &operator[](int i) { return e[i]; };
+    int m_end = 0;
 
-        inline vec2 &operator+=(const vec2 &v2);
-        inline vec2 &operator-=(const vec2 &v2);
-        inline vec2 &operator*=(const vec2 &v2);
-        inline vec2 &operator/=(const vec2 &v2);
-        inline vec2 &operator*=(const float t);
-        inline vec2 &operator/=(const float t);
+    inline const vec2& operator+() const { return *this; }
+    inline vec2 operator-() const { return vec2(-e[0], -e[1]); }
+    inline float operator[](int i) const { return e[i]; }
+    inline float& operator[](int i) { return e[i]; };
 
-        inline float length() const { return sqrt(e[0] * e[0] + e[1] * e[1]); }
-        inline float size() const { return m_end; }
-        inline float squared_length() const { return e[0] * e[0] + e[1] * e[1]; }
-        inline void make_unit_vector();
+    inline vec2& operator+=(const vec2& v2);
+    inline vec2& operator-=(const vec2& v2);
+    inline vec2& operator*=(const vec2& v2);
+    inline vec2& operator/=(const vec2& v2);
+    inline vec2& operator*=(const float t);
+    inline vec2& operator/=(const float t);
 
-        float e[2];
-    };
+    inline float length() const { return sqrt(e[0] * e[0] + e[1] * e[1]); }
+    inline float size() const { return m_end; }
+    inline float squared_length() const { return e[0] * e[0] + e[1] * e[1]; }
+    inline void make_unit_vector();
+
+    float e[2];
+};
 }
