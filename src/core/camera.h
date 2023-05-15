@@ -12,8 +12,12 @@ class Camera{
     public:
     Ray generate_ray(int x, int y);
     void add_film(const Film &f);
-    private:
+    Point3f look_at;
+    Point3f look_from;
+    Point3f vup;
+    int fovy;
     Film film;
+    
 };
 class PerspectiveCamera : public Camera {
     public:
