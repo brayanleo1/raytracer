@@ -12,6 +12,11 @@ namespace rt3 {
         film = f;
     }*/
 
+    /*Camera::Camera(Point3f lk_at, Point3f lk_fr, Point3f up, int fov) : look_at{lk_at}, look_from{lk_fr}, vup{up}, fovy{fov}
+    {
+        //Empty
+    }*/
+
     void Camera::add_film(const Film& f) {
     film = f;
     }
