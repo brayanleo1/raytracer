@@ -1,21 +1,6 @@
 #include "camera.h"
 
 namespace rt3 {
-    /*Camera(Film f) {
-        film = f;
-    }*/
-    /*Camera::Camera(const Film &f) {
-        film = f;
-    }*/
-
-    /*void Camera::add_film(Film f) {
-        film = f;
-    }*/
-
-    /*Camera::Camera(Point3f lk_at, Point3f lk_fr, Point3f up, int fov) : look_at{lk_at}, look_from{lk_fr}, vup{up}, fovy{fov}
-    {
-        //Empty
-    }*/
 
     void Camera::add_film(Film* f) {
     film = f;

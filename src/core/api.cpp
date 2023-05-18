@@ -6,7 +6,7 @@
 
 namespace rt3 {
 
-void render(BackgroundColor backgroundb, Film film) {
+void render(BackgroundColor backgroundb, Film film, Camera camera) {
   // Perform objects initialization here.
   // The Film object holds the memory for the image.
   // ...
@@ -45,6 +45,15 @@ Film *API::make_film(const std::string &name , const ParamSet &ps) {
 
   // Return the newly created film.
   return film;
+}
+
+Camera *API::make_camera(const std::string &name , const ParamSet &ps) {
+  std::cout << ">>> Inside API::make_film()\n";
+  Camera *camera{nullptr};
+  camera = create_camera(ps);
+
+  // Return the newly created film.
+  return camera;
 }
 
 BackgroundColor *API::make_background(const std::string &name, const ParamSet &ps) {
@@ -114,6 +123,9 @@ void API::world_end() {
   std::unique_ptr<Film> the_film{
       make_film(render_opt->film_type, render_opt->film_ps)};
 
+  std::unique_ptr<Camera> the_camera{
+      make_camera(render_opt->camera_type, render_opt->camera_ps)};
+
   // Run only if we got film and background.
   if (the_film && the_background) {
     RT3_MESSAGE("    Parsing scene successfuly done!\n");
@@ -130,7 +142,7 @@ void API::world_end() {
 
     //================================================================================
     auto start = std::chrono::steady_clock::now();
-    render(*the_background, *the_film); // TODO: This is the ray tracer's  main loop.
+    render(*the_background, *the_film, *the_camera); // TODO: This is the ray tracer's  main loop.
     auto end = std::chrono::steady_clock::now();
     //================================================================================
     auto diff = end - start; // Store the time difference between start and end
@@ -177,6 +189,16 @@ void API::film(const ParamSet &ps) {
   std::string type = retrieve(ps, "type", string{"unknown"});
   render_opt->film_type = type;
   render_opt->film_ps = ps;
+}
+
+void API::camera(const ParamSet &ps) {
+  std::cout << ">>> Inside API::camera()\n";
+  VERIFY_SETUP_BLOCK("API::camera");
+
+  // retrieve type from ps.
+  std::string type = retrieve(ps, "type", string{"unknown"});
+  render_opt->camera_type = type;
+  render_opt->camera_ps = ps;
 }
 
 } // namespace rt3
