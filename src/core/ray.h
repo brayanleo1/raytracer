@@ -12,12 +12,12 @@ class Ray {
             real_type start=0, real_type end=INFINITY) : o{o}, d{d}, 
             t_min{0.f}, t_max{INFINITY} {/*empty*/}
         Ray() : t_min{0.f}, t_max{INFINITY}{/*empty*/}
+        Point3i operator()(real_type t) const { return o + d * t; }
     private:
         Point3i o; //!< origin
         Vector3i d; //!< direction
         mutable real_type t_min, t_max; //!< parameters
         // ... the methods goes here
-        Point3i operator()(real_type t) const { return o + d * t; }
 };
 //Point3i pp{0, 0, 0};
 //Vector3i v{3, 2, -4};
