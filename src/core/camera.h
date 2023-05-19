@@ -24,7 +24,6 @@ class PerspectiveCamera : public Camera {
     public:
     Ray generate_ray(int x, int y) const override;
     PerspectiveCamera(Point3f lk_at, Point3f lk_fr, Point3f up, int fov) : Camera(lk_at, lk_fr, up), fovy{fov} {};
-    private:
     int fovy;
 	// ...
 };

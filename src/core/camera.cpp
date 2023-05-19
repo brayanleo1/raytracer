@@ -34,6 +34,7 @@ namespace rt3 {
     */
 
     Ray PerspectiveCamera::generate_ray(int x, int y) const {
+        std::clog<<"pers"<<"\n";
         /*
         *Vector3f gaze = look_at - look_from; Vector3 w = normalize(gaze); // left-hand orientation
         *Vector3f u = normalize( cross( vup, w ) ); // The order inside cross matters. Can you guess why?
@@ -93,6 +94,9 @@ namespace rt3 {
     */
 
     Ray OrthographicCamera::generate_ray(int x, int y) const{
+       std::clog<<"orto"<<"\n";
+       std::clog<< look_at << "\n";
+       std::clog<< look_from << "\n";
        Vector3f gaze = look_at - look_from;
        Vector3f w = gaze; w.make_unit_vector(); // left-hand orientation
        Vector3f u = cross( vup, w ); u.make_unit_vector(); // The order inside cross matters. Can you guess why?

@@ -20,6 +20,8 @@ void render(BackgroundColor backgroundb, Film film, const Camera *camera) {
   // Traverse all pixels to shoot rays from.
   for ( int j = 0 ; j < h ; j++ ) {
       for( int i = 0 ; i < w ; i++ ) {
+          Ray r2 = camera->generate_ray( i, j );
+
           // Not shooting rays just yet; so let us sample the background.
           auto color = background.sample( float(i)/float(w), float(j)/float(h) );
           //auto color = background->sample( float(i)/float(w), float(j)/float(h) ); // get background color.
@@ -49,11 +51,11 @@ Film *API::make_film(const std::string &name , const ParamSet &ps) {
 }
 
 Camera *API::make_camera(const std::string &name , const ParamSet &ps) {
-  std::cout << ">>> Inside API::make_film()\n";
+  std::cout << ">>> Inside API::make_camera()\n";
   Camera *camera{nullptr};
   camera = create_camera(ps);
 
-  // Return the newly created film.
+  // Return the newly created camera.
   return camera;
 }
 
