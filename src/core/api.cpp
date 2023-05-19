@@ -1,12 +1,13 @@
 #include "api.h"
 #include "background.h"
+#include "camera.h"
 
 #include <chrono>
 #include <memory>
 
 namespace rt3 {
 
-void render(BackgroundColor backgroundb, Film film, Camera camera) {
+void render(BackgroundColor backgroundb, Film film, const Camera *camera) {
   // Perform objects initialization here.
   // The Film object holds the memory for the image.
   // ...
@@ -142,7 +143,7 @@ void API::world_end() {
 
     //================================================================================
     auto start = std::chrono::steady_clock::now();
-    render(*the_background, *the_film, *the_camera); // TODO: This is the ray tracer's  main loop.
+    render(*the_background, *the_film, the_camera.get()); // TODO: This is the ray tracer's  main loop.
     auto end = std::chrono::steady_clock::now();
     //================================================================================
     auto diff = end - start; // Store the time difference between start and end

@@ -5,6 +5,7 @@
 #include "commons.h"
 #include "ray.h"
 #include "film.h"
+#include "paramset.h"
 
 namespace rt3
 {

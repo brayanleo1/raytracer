@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "paramset.h"
 
 namespace rt3 {
 
