@@ -129,6 +129,9 @@ void API::world_end() {
   std::unique_ptr<Camera> the_camera{
       make_camera(render_opt->camera_type, render_opt->camera_ps)};
 
+  //Add film to the camera
+  the_camera->add_film(the_film.get());
+
   // Run only if we got film and background.
   if (the_film && the_background) {
     RT3_MESSAGE("    Parsing scene successfuly done!\n");
