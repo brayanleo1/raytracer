@@ -122,6 +122,6 @@ namespace rt3
     }
 
     // Note that the image type is fixed here. Must be read from ParamSet, though.
-    return new Film(Point2i{float(xres), float(yres)}, filename, Film::image_type_e::PPM3, data);
+    return new Film(Point2i{xres, yres}, filename, Film::image_type_e::PPM3, data);
   }
 } // namespace rt3

@@ -25,7 +25,8 @@ void render(BackgroundColor backgroundb, Film film, const Camera *camera) {
           // Not shooting rays just yet; so let us sample the background.
           auto color = background.sample( float(i)/float(w), float(j)/float(h) );
           //auto color = background->sample( float(i)/float(w), float(j)/float(h) ); // get background color.
-          /*camera.*/film.add_sample( Point2i(i,j), color ); // set image buffer at position (i,j), accordingly.
+          /*camera.*/film.add_sample( {i,j},  color ); // set image buffer at position (i,j), accordingly.
+          // /*camera.*/film.add_sample( Point2i{i,j},  color ); // set image buffer at position (i,j), accordingly.
       }
   }
   // send image color buffer to the output file.

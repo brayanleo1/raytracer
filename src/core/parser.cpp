@@ -103,8 +103,7 @@ namespace rt3
         };
 
         parse_parameters(p_element, param_list, /* out */ &ps);
-
-        // API::camera(ps);
+        API::camera(ps);
       }
       else if (tag_name == "background")
       {

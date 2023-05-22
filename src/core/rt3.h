@@ -44,11 +44,12 @@ namespace rt3
   // List of points
   using ListPoint3f = std::vector<Point3f>;
 
-  // Temporary Vec3i. TODO: code a real one.
-  using Vector3i = ms::vec3;
-  using Point3i = ms::vec3;
-  using Point2i = ms::vec2;
-  using Point2f = ms::vec2;
+// Temporary Vec3i. TODO: code a real one.
+using Vector3i = std::array< int, 3>;
+using Point3i  = std::array< int, 3>;
+using Point2i  = std::array< int, 2>;
+using Point2f  = std::array< float, 2>;
+
 
   template <typename T, size_t S>
   std::ostream &operator<<(std::ostream &os, const std::array<T, S> &v)
