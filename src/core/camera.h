@@ -34,7 +34,7 @@ class OrthographicCamera : public Camera {
 	// ...
 };
 
-Camera *create_camera(const ParamSet &ps); 
+Camera *create_camera(const ParamSet &ps, const ParamSet &ps_lkat); 
 }
 
 #endif  // CAMERA_H

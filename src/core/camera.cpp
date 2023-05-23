@@ -94,9 +94,9 @@ namespace rt3 {
     */
 
     Ray OrthographicCamera::generate_ray(int x, int y) const{
-       std::clog<<"orto"<<"\n";
+       /*std::clog<<"orto"<<"\n";
        std::clog<< look_at << "\n";
-       std::clog<< look_from << "\n";
+       std::clog<< look_from << "\n";*/
        Vector3f gaze = look_at - look_from;
        Vector3f w = gaze; w.make_unit_vector(); // left-hand orientation
        Vector3f u = cross( vup, w ); u.make_unit_vector(); // The order inside cross matters. Can you guess why?
@@ -120,12 +120,12 @@ namespace rt3 {
        return Ray(w, e+un*u+vn*v);
     }
 
-    Camera *create_camera(const ParamSet &ps){
+    Camera *create_camera(const ParamSet &ps, const ParamSet &ps_lkat){
         std::cout << ">>> Inside create_camera()\n";
-        Point3f lk_at = retrieve(ps, "look_at", Point3f(0, 0, 0));
-        Point3f lk_fr = retrieve(ps, "look_from", Point3f(0, 0, 0));
-        Point3f up = retrieve(ps, "look_up", Point3f(0, 0, 0));
-        int fov = retrieve(ps, "fovy", int(0));
+        Point3f lk_at = retrieve(ps_lkat, "look_at", Point3f(0, 0, 0));
+        Point3f lk_fr = retrieve(ps_lkat, "look_from", Point3f(0, 0, 0));
+        Point3f up = retrieve(ps_lkat, "up", Point3f(0, 0, 0));
+        float fov = retrieve(ps, "fovy", float(0));
         if(fov == 0) {
             return new OrthographicCamera(lk_at, lk_fr, up);
         } else {

@@ -51,10 +51,10 @@ Film *API::make_film(const std::string &name , const ParamSet &ps) {
   return film;
 }
 
-Camera *API::make_camera(const std::string &name , const ParamSet &ps) {
+Camera *API::make_camera(const std::string &name , const ParamSet &ps, const ParamSet &ps_lkat) {
   std::cout << ">>> Inside API::make_camera()\n";
   Camera *camera{nullptr};
-  camera = create_camera(ps);
+  camera = create_camera(ps, ps_lkat);
 
   // Return the newly created camera.
   return camera;
@@ -128,7 +128,7 @@ void API::world_end() {
       make_film(render_opt->film_type, render_opt->film_ps)};
 
   std::unique_ptr<Camera> the_camera{
-      make_camera(render_opt->camera_type, render_opt->camera_ps)};
+      make_camera(render_opt->camera_type, render_opt->camera_ps, render_opt->look_at)};
 
   //Add film to the camera
   the_camera->add_film(the_film.get());
@@ -206,6 +206,14 @@ void API::camera(const ParamSet &ps) {
   std::string type = retrieve(ps, "type", string{"unknown"});
   render_opt->camera_type = type;
   render_opt->camera_ps = ps;
+}
+
+void API::look_at(const ParamSet &ps) {
+  std::cout << ">>> Inside API::camera()\n";
+  VERIFY_SETUP_BLOCK("API::look_at");
+
+  //pass the parameters
+  render_opt->look_at = ps;
 }
 
 } // namespace rt3

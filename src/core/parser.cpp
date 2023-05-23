@@ -148,7 +148,7 @@ namespace rt3
             {param_type_e::VEC3F, "up"}};
 
         parse_parameters(p_element, param_list, /* out */ &ps);
-        // API::look_at(ps);
+        API::look_at(ps);
       }
       else if (tag_name == "world_begin")
       {

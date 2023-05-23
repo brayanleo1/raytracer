@@ -43,6 +43,7 @@ struct RenderOptions {
   /// the Camera
   string camera_type{ "perspective" };
   ParamSet camera_ps;
+  ParamSet look_at;
   /// the Bakcground
   string bkg_type{ "solid" };  // "image", "interpolated"
   ParamSet bkg_ps;
@@ -89,7 +90,7 @@ class API {
   ///
   static Film* make_film(const string& name, const ParamSet& ps);
   static BackgroundColor* make_background(const string& name, const ParamSet& ps);
-  static Camera* make_camera(const string& name, const ParamSet& ps);
+  static Camera* make_camera(const string& name, const ParamSet& ps, const ParamSet& ps_lkat);
 
  public:
   //=== API function begins here.
@@ -100,6 +101,7 @@ class API {
 
   static void film(const ParamSet& ps);
   static void camera(const ParamSet& ps);
+  static void look_at(const ParamSet& ps);
   static void background(const ParamSet& ps);
   static void world_begin();
   static void world_end();
