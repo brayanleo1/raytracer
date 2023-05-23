@@ -44,9 +44,15 @@ struct RenderOptions {
   string camera_type{ "perspective" };
   ParamSet camera_ps;
   ParamSet look_at;
-  /// the Bakcground
+  /// the Background
   string bkg_type{ "solid" };  // "image", "interpolated"
   ParamSet bkg_ps;
+
+  //the integrator (For proj 4)
+
+  //list of primitives (For the future, proj 3)
+  //using PrimVec = std::vector<shared_ptr<Primitive> >;
+  //PrimVec primitives;
 };
 
 /// Collection of data related to a Graphics state, such as current material,
