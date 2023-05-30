@@ -28,15 +28,10 @@ namespace rt3
   void Film::add_sample(const Point2i &pixel_coord, const RGBAColor &pixel_color)
   {
     auto offset = (pixel_coord[1]*m_full_resolution[0]*4) + (pixel_coord[0]*4);
-    //std::clog << "x: " << pixel_coord[0] << " y: " << pixel_coord[1] << " offs: " << offset << std::endl;
     m_image_data[offset] = pixel_color.r;
     m_image_data[offset + 1] = pixel_color.g;
     m_image_data[offset + 2] = pixel_color.b;
     m_image_data[offset + 3] = 255;
-    /*m_image_data[offset] = 255;
-    m_image_data[offset + 1] = 0;
-    m_image_data[offset + 2] = 0;
-    m_image_data[offset + 3] = 255;*/
   }
 
   /// Convert image to RGB, compute final pixel values, write image.
@@ -45,42 +40,12 @@ namespace rt3
     // TODO: call the proper writing function, either PPM or PNG.
     if (m_image_type == image_type_e::PNG)
     {
-      /*
-      unsigned char *data = new unsigned char [m_full_resolution[0] * m_full_resolution[1] * 3];
-      for(int i = 0; i < m_full_resolution[0]; i++) {
-        for(int j = 0; j < m_full_resolution[1]; j++) {
-          int ind = i * m_full_resolution[0] + j;
-          int r = m_image_data[ind].r;
-          int g = m_image_data[ind].g;
-          int b = m_image_data[ind].b;
-          data[ind * 3] = static_cast<unsigned char>(r);
-          data[ind * 3 + 1] = static_cast<unsigned char>(g);
-          data[ind * 3 + 2] = static_cast<unsigned char>(b);
-        }
-      }*/
       save_png((unsigned char*) m_image_data.data(), m_full_resolution[0], m_full_resolution[1], 4, m_filename);
     }
     else if (m_image_type == image_type_e::PPM3)
     {
-      
-      //std::ofstream out(m_filename + ".ppm");
       std::vector <unsigned char> out(m_full_resolution[0] * m_full_resolution[1] * 3);
-      /*out << "P3\n";
-      std::string t = std::to_string(int(m_full_resolution[0])) + ' ' + std::to_string(int(m_full_resolution[1])) + "\n";
-      out << t;
-      out << "255\n";*/
-      /*std::clog << m_image_data.size();
-      exit(0);
-      for (auto l : m_image_data)
-      {
-        out.push_back(static_cast<unsigned char>(l.r));
-        out.push_back(static_cast<unsigned char>(l.g));
-        out.push_back(static_cast<unsigned char>(l.b));
-        out.push_back();
-      }*/
-      //out.close();
-      
-      //unsigned char *data = new unsigned char [m_full_resolution[0] * m_full_resolution[1] * 3];
+
       size_t idxPpm = 0;
       for(size_t i = 0; i < m_full_resolution[0] * m_full_resolution[1] * 4; i+=4) {
         out[idxPpm] = m_image_data[i];
