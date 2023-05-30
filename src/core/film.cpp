@@ -14,8 +14,8 @@ namespace rt3
 {
 
   //=== Film Method Definitions
-  Film::Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<RGBAColor> &imgdt)
-      : m_full_resolution{resolution}, m_filename{filename}, m_image_type{imgt}, m_image_data{imgdt}
+  Film::Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<unsigned char> &imgdt)
+      : m_full_resolution{resolution}, m_filename{filename}, m_image_type{imgt}, m_image_data{std::move(imgdt)}
   {
     // TODO
   }
@@ -27,9 +27,16 @@ namespace rt3
   /// Add the color to image.
   void Film::add_sample(const Point2i &pixel_coord, const RGBAColor &pixel_color)
   {
-
-    m_image_data[(pixel_coord[1] * m_full_resolution[0]) + pixel_coord[0]] = pixel_color;
-    // m_image_data[(m_image_data.size()-1)].append(" "+std::to_string(pixel_color.r)+' '+std::to_string(pixel_color.g)+' '+std::to_string(pixel_color.b)+"\n");
+    auto offset = (pixel_coord[1]*m_full_resolution[0]*4) + (pixel_coord[0]*4);
+    //std::clog << "x: " << pixel_coord[0] << " y: " << pixel_coord[1] << " offs: " << offset << std::endl;
+    m_image_data[offset] = pixel_color.r;
+    m_image_data[offset + 1] = pixel_color.g;
+    m_image_data[offset + 2] = pixel_color.b;
+    m_image_data[offset + 3] = 255;
+    /*m_image_data[offset] = 255;
+    m_image_data[offset + 1] = 0;
+    m_image_data[offset + 2] = 0;
+    m_image_data[offset + 3] = 255;*/
   }
 
   /// Convert image to RGB, compute final pixel values, write image.
@@ -38,29 +45,51 @@ namespace rt3
     // TODO: call the proper writing function, either PPM or PNG.
     if (m_image_type == image_type_e::PNG)
     {
-      // Image_data gets a fourth 255 at each for opacity
-      /*std::string data;
-      std::vector<unsigned char> img;
-      for(auto l : m_image_data) {
-        data.append(std::to_string(l.r)+" "+std::to_string(l.g)+" "+std::to_string(l.b)+" 255\n");
-      }
-      strcpy( (char*) img, data );*/
-      // Aqui embaixo está o começo do encode
-      // lodepng::encode(m_filename, m_image_data, m_full_resolution[0], m_full_resolution[1]);
-      // lodepng::encode(img,img/*in*/,m_full_resolution[0],m_full_resolution[1]);
+      /*
+      unsigned char *data = new unsigned char [m_full_resolution[0] * m_full_resolution[1] * 3];
+      for(int i = 0; i < m_full_resolution[0]; i++) {
+        for(int j = 0; j < m_full_resolution[1]; j++) {
+          int ind = i * m_full_resolution[0] + j;
+          int r = m_image_data[ind].r;
+          int g = m_image_data[ind].g;
+          int b = m_image_data[ind].b;
+          data[ind * 3] = static_cast<unsigned char>(r);
+          data[ind * 3 + 1] = static_cast<unsigned char>(g);
+          data[ind * 3 + 2] = static_cast<unsigned char>(b);
+        }
+      }*/
+      save_png((unsigned char*) m_image_data.data(), m_full_resolution[0], m_full_resolution[1], 4, m_filename);
     }
     else if (m_image_type == image_type_e::PPM3)
     {
-      std::ofstream out(m_filename + ".ppm");
-      out << "P3\n";
+      
+      //std::ofstream out(m_filename + ".ppm");
+      std::vector <unsigned char> out(m_full_resolution[0] * m_full_resolution[1] * 3);
+      /*out << "P3\n";
       std::string t = std::to_string(int(m_full_resolution[0])) + ' ' + std::to_string(int(m_full_resolution[1])) + "\n";
       out << t;
-      out << "255\n";
+      out << "255\n";*/
+      /*std::clog << m_image_data.size();
+      exit(0);
       for (auto l : m_image_data)
       {
-        out << std::to_string(l.r) << " " << std::to_string(l.g) << " " << std::to_string(l.b) << "\n";
+        out.push_back(static_cast<unsigned char>(l.r));
+        out.push_back(static_cast<unsigned char>(l.g));
+        out.push_back(static_cast<unsigned char>(l.b));
+        out.push_back();
+      }*/
+      //out.close();
+      
+      //unsigned char *data = new unsigned char [m_full_resolution[0] * m_full_resolution[1] * 3];
+      size_t idxPpm = 0;
+      for(size_t i = 0; i < m_full_resolution[0] * m_full_resolution[1] * 4; i+=4) {
+        out[idxPpm] = m_image_data[i];
+        out[idxPpm+1] = m_image_data[i+1];
+        out[idxPpm+2] = m_image_data[i+2];
+        idxPpm+=3;
       }
-      out.close();
+      
+      save_ppm3(out.data(),m_full_resolution[0], m_full_resolution[1], 3, (m_filename + ".ppm"));
     }
   }
 
@@ -111,17 +140,10 @@ namespace rt3
       std::cout << e << " ";
     std::cout << '\n';
 
-    std::vector<RGBAColor> data;
-
-    for (int i = 0; i < xres; i++)
-    {
-      for (int j = 0; j < yres; j++)
-      {
-        data.push_back({0, 0, 0, 255});
-      }
-    }
+    //Creating and allocating a image space already filled with 0's
+    std::vector<unsigned char> data(xres * yres * 4);
 
     // Note that the image type is fixed here. Must be read from ParamSet, though.
-    return new Film(Point2i{xres, yres}, filename, Film::image_type_e::PPM3, data);
+    return new Film(Point2i{xres, yres}, filename, Film::image_type_e::PNG, data);
   }
 } // namespace rt3

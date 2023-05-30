@@ -15,7 +15,7 @@ class Film {
   enum class image_type_e : int { PNG = 0, PPM3, PPM6 };
 
   //=== Film Public Methods
-  Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<RGBAColor> &imgdt);
+  Film(const Point2i &resolution, const std::string &filename, image_type_e imgt, std::vector<unsigned char> &imgdt);
   virtual ~Film();
 
   /// Retrieve original Film resolution.
@@ -32,7 +32,7 @@ class Film {
   std::string m_filename;           //!< Full path file name + extension.
   image_type_e m_image_type;        //!< Image type, PNG, PPM3, PPM6.
   // TODO: Create the matrix (or vector) that will hold the image data.
-  std::vector<RGBAColor> m_image_data;
+  std::vector<unsigned char> m_image_data;
   // std::unique_ptr< ColorBuffer > m_color_buffer_ptr; //!< Reference to the
   // color buffer (image) object.
 };

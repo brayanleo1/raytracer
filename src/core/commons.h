@@ -5,10 +5,10 @@
 
 struct RGBAColor
 {
-	std::uint32_t r;
-	std::uint32_t g;
-	std::uint32_t b;
-	std::uint32_t a;
+	unsigned char r;
+	unsigned char g;
+	unsigned char b;
+	unsigned char a;
 };
 
 constexpr RGBAColor red{255,0,0,255};

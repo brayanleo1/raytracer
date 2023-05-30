@@ -15,13 +15,14 @@ void render(BackgroundColor backgroundb, Film film, const Camera *camera) {
   auto background = backgroundb;
   auto w = film.get_resolution()[0];
   auto h = film.get_resolution()[1];
+  std::clog << "largura " << w << " altura " << h << std::endl;
   //auto w = camera.film.width(); // Retrieve the image dimensions in pixels.
   //auto h = camera.film.height();
   // Traverse all pixels to shoot rays from.
   for ( int j = 0 ; j < h ; j++ ) {
       for( int i = 0 ; i < w ; i++ ) {
           Ray r2 = camera->generate_ray( i, j );
-
+          //std::clog << "i: " << i << " j: " << j << std::endl;
           // Not shooting rays just yet; so let us sample the background.
           auto color = background.sample( float(i)/float(w), float(j)/float(h) );
           //auto color = background->sample( float(i)/float(w), float(j)/float(h) ); // get background color.
