@@ -54,7 +54,7 @@ namespace rt3
         idxPpm+=3;
       }
       
-      save_ppm3(out.data(),m_full_resolution[0], m_full_resolution[1], 3, (m_filename + ".ppm"));
+      save_ppm3(out.data(),m_full_resolution[0], m_full_resolution[1], 3, m_filename);
     }
   }
 
@@ -108,7 +108,15 @@ namespace rt3
     //Creating and allocating a image space already filled with 0's
     std::vector<unsigned char> data(xres * yres * 4);
 
+    //Obtaining String_type
+    std::string sTyp = retrieve(ps, "img_type", std::string("png"));
+    std::transform(sTyp.begin(), sTyp.end(), sTyp.begin(), ::tolower);
+    Film::image_type_e typ = Film::image_type_e::PNG;
+    if(sTyp == "ppm3") {
+      typ = Film::image_type_e::PPM3;
+    }
+
     // Note that the image type is fixed here. Must be read from ParamSet, though.
-    return new Film(Point2i{xres, yres}, filename, Film::image_type_e::PNG, data);
+    return new Film(Point2i{xres, yres}, filename, typ, data);
   }
 } // namespace rt3
