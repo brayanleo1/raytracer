@@ -5,6 +5,7 @@
 
 #include "rt3.h"
 #include "paramset.h"
+#include "primitive.h"
 
 //=== API Macro definitions
 
@@ -51,7 +52,7 @@ struct RenderOptions {
   //the integrator (For proj 4)
 
   //list of primitives (For the future, proj 3)
-  //using PrimVec = std::vector<shared_ptr<Primitive> >;
+  using PrimVec = std::vector<std::shared_ptr<Primitive> >;
   //PrimVec primitives;
 };
 

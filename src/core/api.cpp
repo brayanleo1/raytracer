@@ -7,14 +7,14 @@
 
 namespace rt3 {
 
-void render(BackgroundColor backgroundb, Film film, const Camera *camera) {
+void render(BackgroundColor backgroundb, const Camera *camera) {
   // Perform objects initialization here.
   // The Film object holds the memory for the image.
   // ...
 
   auto background = backgroundb;
-  auto w = film.get_resolution()[0];
-  auto h = film.get_resolution()[1];
+  auto w = camera->film->get_resolution()[0];
+  auto h = camera->film->get_resolution()[1];
 
   // Traverse all pixels to shoot rays from.
   for ( int j = 0 ; j < h ; j++ ) {
@@ -24,11 +24,12 @@ void render(BackgroundColor backgroundb, Film film, const Camera *camera) {
 
           auto color = background.sample( float(i)/float(w), float(j)/float(h) );
           //auto color = background->sample( float(i)/float(w), float(j)/float(h) ); // get background color.
-          /*camera.*/film.add_sample( {i,j},  color ); // set image buffer at position (i,j), accordingly.
+          ///*camera.*/film.add_sample( {i,j},  color ); // set image buffer at position (i,j), accordingly.
+          camera->film->add_sample( {i,j},  color ); // set image buffer at position (i,j), accordingly.
       }
   }
   // send image color buffer to the output file.
-  film.write_image();
+  camera->film->write_image();
 }
 
 //=== API's static members declaration and initialization.
@@ -147,7 +148,7 @@ void API::world_end() {
 
     //================================================================================
     auto start = std::chrono::steady_clock::now();
-    render(*the_background, *the_film, the_camera.get()); // TODO: This is the ray tracer's  main loop.
+    render(*the_background, the_camera.get()); // TODO: This is the ray tracer's  main loop.
     auto end = std::chrono::steady_clock::now();
     //================================================================================
     auto diff = end - start; // Store the time difference between start and end

@@ -66,6 +66,7 @@ using Point2f  = std::array< float, 2>;
   class Background;
   class BackgroundColor;
   class Camera;
+  class Primitive;
 
   //=== aliases
   typedef float real_type;
