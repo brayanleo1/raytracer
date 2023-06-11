@@ -149,6 +149,24 @@ namespace rt3
 
         parse_parameters(p_element, param_list, /* out */ &ps);
         API::look_at(ps);
+      } else if (tag_name == "material")
+      {
+        ParamSet ps;
+        vector<std::pair<param_type_e, string>> param_list{
+            {param_type_e::STRING, "type"},
+            {param_type_e::POINT3F, "color"}};
+
+        parse_parameters(p_element, param_list, /* out */ &ps);
+        API::material(ps);
+      } else if (tag_name == "object")
+      {
+        ParamSet ps;
+        vector<std::pair<param_type_e, string>> param_list{
+            {param_type_e::REAL, "radius"},
+            {param_type_e::POINT3F, "center"}};
+
+        parse_parameters(p_element, param_list, /* out */ &ps);
+        API::primitives(ps);
       }
       else if (tag_name == "world_begin")
       {

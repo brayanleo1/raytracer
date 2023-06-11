@@ -48,12 +48,18 @@ struct RenderOptions {
   /// the Background
   string bkg_type{ "solid" };  // "image", "interpolated"
   ParamSet bkg_ps;
+  // the Material
+  string material_type{ "flat" };
+  ParamSet material_ps;
+  // the Primitives
+  string primitives_type{ "sphere" };
+  ParamSet primitives_ps;
 
   //the integrator (For proj 4)
 
   //list of primitives (For the future, proj 3)
   using PrimVec = std::vector<std::shared_ptr<Primitive> >;
-  //PrimVec primitives;
+  PrimVec primitives;
 };
 
 /// Collection of data related to a Graphics state, such as current material,
@@ -98,6 +104,8 @@ class API {
   static Film* make_film(const string& name, const ParamSet& ps);
   static BackgroundColor* make_background(const string& name, const ParamSet& ps);
   static Camera* make_camera(const string& name, const ParamSet& ps, const ParamSet& ps_lkat);
+  static Material* make_material(const string& name, const ParamSet& ps);
+  static Primitive* make_primitive(const std::string &name, const ParamSet &ps, std::shared_ptr<Material>& mtr);
 
  public:
   //=== API function begins here.
@@ -110,6 +118,8 @@ class API {
   static void camera(const ParamSet& ps);
   static void look_at(const ParamSet& ps);
   static void background(const ParamSet& ps);
+  static void material(const ParamSet& ps);
+  static void primitives(const ParamSet& ps);
   static void world_begin();
   static void world_end();
 };

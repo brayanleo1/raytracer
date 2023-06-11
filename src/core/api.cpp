@@ -68,6 +68,24 @@ BackgroundColor *API::make_background(const std::string &name, const ParamSet &p
   return bkg;
 }
 
+Material *API::make_material(const std::string &name, const ParamSet &ps) {
+  std::cout << ">>> Inside API::material()\n";
+  Material *mtr{nullptr};
+  mtr = create_material(ps);
+
+  // Return the newly created material.
+  return mtr;
+}
+
+Primitive *API::make_primitive(const std::string &name, const ParamSet &ps, std::shared_ptr<Material>& mtr) {
+  std::cout << ">>> Inside API::primitive()\n";
+  Primitive *pm{nullptr};
+  pm = create_primitive(ps, mtr);
+
+  // Return the newly created primitive.
+  return pm;
+}
+
 // ˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆˆ
 // END OF THE AUXILIARY FUNCTIONS
 // =========================================================================
@@ -128,6 +146,13 @@ void API::world_end() {
 
   std::unique_ptr<Camera> the_camera{
       make_camera(render_opt->camera_type, render_opt->camera_ps, render_opt->look_at)};
+
+  //Add material
+  std::unique_ptr<Material> the_material{
+      make_material(render_opt->material_type, render_opt->material_ps)};
+
+  //Add objects to the list
+  std::vector<std::shared_ptr<Primitive> > objects;
 
   //Add film to the camera
   the_camera->add_film(the_film.get());
@@ -213,6 +238,26 @@ void API::look_at(const ParamSet &ps) {
 
   //pass the parameters
   render_opt->look_at = ps;
+}
+
+void API::material(const ParamSet &ps) {
+  std::cout << ">>> Inside API::material()\n";
+  VERIFY_SETUP_BLOCK("API::material");
+
+  // retrieve type from ps.
+  std::string type = retrieve(ps, "type", string{"unknown"});
+  render_opt->material_type = type;
+  render_opt->material_ps = ps;
+}
+
+void API::primitives(const ParamSet &ps) {
+  std::cout << ">>> Inside API::primitives()\n";
+  VERIFY_SETUP_BLOCK("API::primitives");
+
+  // retrieve type from ps.
+  std::string type = retrieve(ps, "type", string{"unknown"});
+  render_opt->primitives_type = type;
+  render_opt->primitives_ps = ps;
 }
 
 } // namespace rt3
